@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "platform.h"
+
 #include "ip.h"
 #include "net.h"
 #include "util.h"
@@ -15,6 +17,12 @@
 
 const ip_addr_t IP_ADDR_ANY = 0x00000000;       /* 0.0.0.0 */
 const ip_addr_t IP_ADDR_BROADCAST = 0xffffffff; /* 255.255.255.255 */
+
+/*
+ * NOTE: if you want to add/delete the entries after net_run(),
+ *       you need to protect these lists with a mutex.
+ */
+static struct ip_iface *ifaces;
 
 int ip_addr_pton(const char *p, ip_addr_t *n) {
   char *sp, *ep;
@@ -47,32 +55,20 @@ char *ip_addr_ntop(ip_addr_t n, char *p, size_t size) {
   return p;
 }
 
+struct ip_iface *ip_iface_alloc(const char *unicast, const char *netmask) {}
+
+/*
+ * NOTE: must not be call after net_run()
+ */
+int ip_iface_register(struct net_device *dev, struct ip_iface *iface) {}
+
+struct ip_iface *ip_iface_select(ip_addr_t addr) {}
+
 static void ip_print(const uint8_t *data, size_t len) {
   struct ip_hdr *hdr;
   uint8_t v, hl, hlen;
   uint16_t total, offset;
   char addr[IP_ADDR_STR_LEN];
-
-  flockfile(stderr);
-  hdr = (struct ip_hdr *)data;
-  /* v(ip version), hl(header len)を分けて取り出す */
-  v = hdr->vhl >> 4;
-  hl = hdr->vhl & 0x0f;
-  hlen = hl << 2; /* hlは4倍する */
-  fprintf(stderr, "vhl: 0x%02x [v: %u, hl: %u (%u)]\n", hdr->vhl, v, hl, hlen);
-  fprintf(stderr, "tos: 0x%02x\n", hdr->tos);
-
-  total = ntoh16(hdr->total);
-  fprintf(stderr, "total: %u (payload: %u)\n", total, total - hlen);
-  fprintf(stderr, "id: %u\n", ntoh16(hdr->id));
-
-  offset = ntoh16(hdr->offset);
-  fprintf(stderr, "offset: 0x%04x [flags=%x, offset=%u]\n", offset, offset >> 13, offset & IP_HDR_OFFSET_MASK);
-  fprintf(stderr, "ttl: %u\n", hdr->ttl);
-  fprintf(stderr, "protocol: %u\n", hdr->protocol);
-  fprintf(stderr, "sum: 0x%04x\n", ntoh16(hdr->sum));
-  fprintf(stderr, "src: %s\n", ip_addr_ntop(hdr->src, addr, sizeof(addr)));
-  fprintf(stderr, "dst: %s\n", ip_addr_ntop(hdr->dst, addr, sizeof(addr)));
 
 #ifdef HEXDUMP
   hexdump(stderr, data, len);
