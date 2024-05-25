@@ -7,11 +7,18 @@
 #include "net.h"
 #include "util.h"
 
+struct net_protocol {
+  struct net_protocol *next;
+  uint16_t type;
+  net_protocol_handler_t handler;
+};
+
 /*
  * NOTE: if you want to add/delete the entries after net_run(),
  *       you need to protect these lists with a lock.
  */
 static struct net_device *devices;
+static struct net_protocol *protocols;
 
 struct net_device *net_device_alloc(void) {
   struct net_device *dev;
@@ -92,7 +99,11 @@ int net_device_output(struct net_device *dev, uint16_t type, const uint8_t *data
   return 0;
 }
 
-// TODO: ネットワークデバイスからのinputは割り込みで制御する、あとで実装
+/*
+ * NOTE: must not be call after net_run()
+ */
+int net_protocol_register(uint16_t type, net_protocol_handler_t handler) {}
+
 int net_input(uint16_t type, const uint8_t *data, size_t len, struct net_device *dev) {
   debugf("dev=%s, type=0x%04x, len=%zu", dev->name, type, len);
   debugdump(data, len);
