@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
 
 #include "platform.h"
 
@@ -177,6 +179,13 @@ static void ip_input(const uint8_t *data, size_t len, struct net_device *dev) {
 
   ip_print(data, total);
 }
+
+static int ip_output_device(struct ip_iface *iface, const uint8_t *data, size_t len, ip_addr_t target) {}
+
+static ssize_t ip_build_packet(uint8_t protocol, const uint8_t *data, size_t len, uint16_t id, uint16_t offset,
+                               ip_addr_t src, ip_addr_t dst, uint8_t *buf, size_t size) {}
+
+ssize_t ip_output(uint8_t protocol, const uint8_t *data, size_t len, ip_addr_t src, ip_addr_t dst) {}
 
 int ip_init(void) {
   if (net_protocol_register(NET_PROTOCOL_TYPE_IP, ip_input) == -1) {
