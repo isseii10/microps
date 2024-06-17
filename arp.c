@@ -188,11 +188,10 @@ static int arp_reply(struct net_iface *iface, const uint8_t *tha, ip_addr_t tpa,
   return net_device_output(iface->dev, ETHER_TYPE_ARP, (uint8_t *)&reply, sizeof(reply), tha);
 }
 
-static void arp_input(const uint8_t *data, size_t len, struct net_device *dev) {
-  struct arp_ether_ip *msg;
-  ip_addr_t spa, tpa;
-  int merge = 0;
-  struct net_iface *iface;
+static int arp_request(struct net_iface *iface, ip_addr_t tpa) {}
+
+static int arp_reply(struct net_iface *iface, const uint8_t *tha, ip_addr_t tpa, const uint8_t *dst) {
+  struct arp_ether_ip reply;
 
   if (len < sizeof(*msg)) {
     errorf("too short");
