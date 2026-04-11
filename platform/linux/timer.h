@@ -3,14 +3,10 @@
 
 #include <sys/time.h>
 
-extern int
-timer_register(struct timeval interval, void (*handler)(void));
+extern int timer_register(struct timeval interval, void (*handler)(void));
 
-extern int
-timer_init(void);
-extern int
-timer_run(void);
-extern int
-timer_shutdown(void);
+extern int timer_init(void);
+extern int timer_run(void);
+extern int timer_shutdown(void);
 
 #endif
