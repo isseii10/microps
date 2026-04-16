@@ -49,8 +49,7 @@ int sched_task_destroy(struct sched_task *task) {
   return pthread_cond_destroy(&task->cond);
 }
 
-int sched_task_sleep(struct sched_task *task, lock_t *lock,
-                     const struct timespec *abstime) {
+int sched_task_sleep(struct sched_task *task, lock_t *lock, const struct timespec *abstime) {
   int ret;
 
   if (task->interrupted) {
@@ -76,9 +75,7 @@ int sched_task_sleep(struct sched_task *task, lock_t *lock,
   return ret;
 }
 
-int sched_task_wakeup(struct sched_task *task) {
-  return pthread_cond_broadcast(&task->cond);
-}
+int sched_task_wakeup(struct sched_task *task) { return pthread_cond_broadcast(&task->cond); }
 
 static void sched_irq_handler(unsigned int irq, void *arg) {
   struct sched_task *task;
@@ -95,9 +92,7 @@ static void sched_irq_handler(unsigned int irq, void *arg) {
   lock_release(&lock);
 }
 
-int sched_init(void) {
-  return intr_register(INTR_IRQ_USER, sched_irq_handler, 0, NULL);
-}
+int sched_init(void) { return intr_register(INTR_IRQ_USER, sched_irq_handler, 0, NULL); }
 
 int sched_run(void) {
   /* do nothing */

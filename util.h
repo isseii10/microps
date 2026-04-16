@@ -17,32 +17,31 @@
  * Time
  */
 
-#define timeval_add_usec(x, y)                                                 \
-  do {                                                                         \
-    (x)->tv_sec += (y) / 1000000;                                              \
-    (x)->tv_usec += (y) % 1000000;                                             \
-    if ((x)->tv_usec >= 1000000) {                                             \
-      (x)->tv_sec += 1;                                                        \
-      (x)->tv_usec -= 1000000;                                                 \
-    }                                                                          \
+#define timeval_add_usec(x, y)                                                                                         \
+  do {                                                                                                                 \
+    (x)->tv_sec += (y) / 1000000;                                                                                      \
+    (x)->tv_usec += (y) % 1000000;                                                                                     \
+    if ((x)->tv_usec >= 1000000) {                                                                                     \
+      (x)->tv_sec += 1;                                                                                                \
+      (x)->tv_usec -= 1000000;                                                                                         \
+    }                                                                                                                  \
   } while (0);
 
-#define timespec_add_nsec(x, y)                                                \
-  do {                                                                         \
-    (x)->tv_sec += (y) / 1000000000;                                           \
-    (x)->tv_nsec += (y) % 1000000000;                                          \
-    if ((x)->tv_nsec >= 1000000000) {                                          \
-      (x)->tv_sec += 1;                                                        \
-      (x)->tv_nsec -= 1000000000;                                              \
-    }                                                                          \
+#define timespec_add_nsec(x, y)                                                                                        \
+  do {                                                                                                                 \
+    (x)->tv_sec += (y) / 1000000000;                                                                                   \
+    (x)->tv_nsec += (y) % 1000000000;                                                                                  \
+    if ((x)->tv_nsec >= 1000000000) {                                                                                  \
+      (x)->tv_sec += 1;                                                                                                \
+      (x)->tv_nsec -= 1000000000;                                                                                      \
+    }                                                                                                                  \
   } while (0);
 
 /*
  * Logging
  */
 
-#define logf(lv, fmt, ...)                                                     \
-  lprintf(stderr, lv, __FILE__, __LINE__, __func__, fmt, ##__VA_ARGS__)
+#define logf(lv, fmt, ...) lprintf(stderr, lv, __FILE__, __LINE__, __func__, fmt, ##__VA_ARGS__)
 
 #define errorf(fmt, ...) logf('E', fmt, ##__VA_ARGS__)
 #define warnf(fmt, ...) logf('W', fmt, ##__VA_ARGS__)
@@ -55,8 +54,7 @@
 #define debugdump(...)
 #endif
 
-extern int lprintf(FILE *fp, int level, const char *file, int line,
-                   const char *func, const char *fmt, ...);
+extern int lprintf(FILE *fp, int level, const char *file, int line, const char *func, const char *fmt, ...);
 extern void hexdump(FILE *fp, const void *data, size_t size);
 
 /*
@@ -77,8 +75,7 @@ struct queue {
 typedef void (*queue_func_t)(void *arg, struct queue_entry *entry);
 
 extern void queue_init(struct queue *queue);
-extern struct queue_entry *queue_push(struct queue *queue,
-                                      struct queue_entry *entry);
+extern struct queue_entry *queue_push(struct queue *queue, struct queue_entry *entry);
 extern struct queue_entry *queue_pop(struct queue *queue);
 extern struct queue_entry *queue_peek(struct queue *queue);
 extern void queue_foreach(struct queue *queue, queue_func_t func, void *arg);

@@ -58,8 +58,7 @@ static int net_device_close(struct net_device *dev) {
   return 0;
 }
 
-int net_device_output(struct net_device *dev, uint16_t type,
-                      const uint8_t *data, size_t len, const void *dst) {
+int net_device_output(struct net_device *dev, uint16_t type, const uint8_t *data, size_t len, const void *dst) {
   debugf("dev=%s, type=0x%04x, len=%zu", dev->name, type, len);
   debugdump(data, len);
   if (!NET_DEVICE_IS_UP(dev)) {

@@ -75,8 +75,7 @@ static int cleanup(void) {
 static int app_main(void) {
   debugf("press Ctrl+C to terminate");
   while (!terminate) {
-    if (net_device_output(dev, 0x0800, test_data, sizeof(test_data), NULL) ==
-        -1) {
+    if (net_device_output(dev, 0x0800, test_data, sizeof(test_data), NULL) == -1) {
       errorf("net_device_output() failure");
       break;
     }

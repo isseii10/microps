@@ -17,8 +17,7 @@
  * Logging
  */
 
-int lprintf(FILE *fp, int level, const char *file, int line, const char *func,
-            const char *fmt, ...) {
+int lprintf(FILE *fp, int level, const char *file, int line, const char *func, const char *fmt, ...) {
   struct timeval tv;
   struct tm tm;
   char timestamp[32];
@@ -28,8 +27,7 @@ int lprintf(FILE *fp, int level, const char *file, int line, const char *func,
   flockfile(fp);
   gettimeofday(&tv, NULL);
   strftime(timestamp, sizeof(timestamp), "%T", localtime_r(&tv.tv_sec, &tm));
-  n += fprintf(fp, "%s.%03d [%c] %s: ", timestamp, (int)(tv.tv_usec / 1000),
-               level, func);
+  n += fprintf(fp, "%s.%03d [%c] %s: ", timestamp, (int)(tv.tv_usec / 1000), level, func);
   va_start(ap, fmt);
   n += vfprintf(fp, fmt, ap);
   va_end(ap);
@@ -152,13 +150,10 @@ static int byteorder(void) {
   return *(uint8_t *)&x ? __LITTLE_ENDIAN : __BIG_ENDIAN;
 }
 
-static uint16_t byteswap16(uint16_t v) {
-  return (v & 0x00ff) << 8 | (v & 0xff00) >> 8;
-}
+static uint16_t byteswap16(uint16_t v) { return (v & 0x00ff) << 8 | (v & 0xff00) >> 8; }
 
 static uint32_t byteswap32(uint32_t v) {
-  return (v & 0x000000ff) << 24 | (v & 0x0000ff00) << 8 |
-         (v & 0x00ff0000) >> 8 | (v & 0xff000000) >> 24;
+  return (v & 0x000000ff) << 24 | (v & 0x0000ff00) << 8 | (v & 0x00ff0000) >> 8 | (v & 0xff000000) >> 24;
 }
 
 uint16_t hton16(uint16_t h) {

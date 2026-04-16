@@ -15,8 +15,7 @@ struct sched_task {
 
 extern int sched_task_init(struct sched_task *task);
 extern int sched_task_destroy(struct sched_task *task);
-extern int sched_task_sleep(struct sched_task *task, lock_t *lock,
-                            const struct timespec *abstime);
+extern int sched_task_sleep(struct sched_task *task, lock_t *lock, const struct timespec *abstime);
 extern int sched_task_wakeup(struct sched_task *task);
 
 extern int sched_init(void);

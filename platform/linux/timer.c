@@ -48,8 +48,7 @@ static void timer_irq_handler(unsigned int irq, void *arg) {
   gettimeofday(&now, NULL);
   for (timer = timers; timer; timer = timer->next) {
     timersub(&now, &timer->last, &diff);
-    if (timercmp(&timer->interval, &diff, <) !=
-        0) { /* true (!0) or false (0) */
+    if (timercmp(&timer->interval, &diff, <) != 0) { /* true (!0) or false (0) */
       timer->handler();
       timer->last = now;
     }
@@ -77,9 +76,8 @@ int timer_run(void) {
     errorf("timer_settime: %s", strerror(errno));
     return -1;
   }
-  infof("interval={%d, %d}, initial={%d, %d}", interval.it_interval.tv_sec,
-        interval.it_interval.tv_nsec, interval.it_value.tv_sec,
-        interval.it_value.tv_nsec);
+  infof("interval={%d, %d}, initial={%d, %d}", interval.it_interval.tv_sec, interval.it_interval.tv_nsec,
+        interval.it_value.tv_sec, interval.it_value.tv_nsec);
   return 0;
 }
 
