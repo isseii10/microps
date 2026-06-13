@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include "icmp.h"
 #include "ip.h"
@@ -31,17 +32,81 @@ struct icmp_dest_unreach {
   uint32_t unused; /* zero */
 };
 
-static char *icmp_type_ntoa(uint8_t type) {}
+static char *icmp_type_ntoa(uint8_t type) {
+  switch (type) {
+  case ICMP_TYPE_ECHO_REPLY:
+    return "EchoReply";
+  case ICMP_TYPE_DEST_UNREACH:
+    return "DestinationUnreachable";
+  case ICMP_TYPE_SOURCE_QUENCH:
+    return "SourceQuench";
+  case ICMP_TYPE_REDIRECT:
+    return "Redirect";
+  case ICMP_TYPE_ECHO:
+    return "Echo";
+  case ICMP_TYPE_TIME_EXCEEDED:
+    return "TimeExceeded";
+  case ICMP_TYPE_PARAM_PROBLEM:
+    return "ParameterProblem";
+  case ICMP_TYPE_TIMESTAMP:
+    return "Typestamp";
+  case ICMP_TYPE_TIMESTAMP_REPLY:
+    return "TypestampReply";
+  case ICMP_TYPE_INFO_REQUEST:
+    return "InfomationRequest";
+  case ICMP_TYPE_INFO_REPLY:
+    return "InfomationReply";
+  }
+  return "Unknown";
+}
 
-static void icmp_print(const uint8_t *data, size_t len) {}
+static void icmp_print(const uint8_t *data, size_t len) {
+  struct icmp_hdr *hdr;
+  struct icmp_echo *echo;
+  struct icmp_dest_unreach *unreach;
+
+  flockfile(stderr);
+  hdr = (struct icmp_hdr *)data;
+  fprintf(stderr, "     type: %u (%s)\n", hdr->icmp_type, icmp_type_ntoa(hdr->icmp_type));
+  fprintf(stderr, "     code: %u\n", hdr->icmp_code);
+  fprintf(stderr, "      sum: 0x%04x\n", ntoh16(hdr->icmp_sum));
+  switch (hdr->icmp_type) {
+  case ICMP_TYPE_ECHO_REPLY:
+  case ICMP_TYPE_ECHO:
+    echo = (struct icmp_echo *)hdr;
+    fprintf(stderr, "      id: %u\n", ntoh16(echo->id));
+    fprintf(stderr, "     seq: %u\n", ntoh16(echo->seq));
+    break;
+  case ICMP_TYPE_DEST_UNREACH:
+    unreach = (struct icmp_dest_unreach *)hdr;
+    fprintf(stderr, "  unused: %u\n", ntoh32(unreach->unused));
+    break;
+  default:
+    fprintf(stderr, "     dep: 0x08%x\n", ntoh32(hdr->dep));
+  }
+#ifdef HEXDUMP
+  hexdump(stderr, data, len);
+#endif
+  funlockfile(stderr);
+}
 
 static void icmp_input(const struct ip_hdr *iphdr, const uint8_t *data, size_t len, struct ip_iface *iface) {
+  struct icmp_hdr *hdr;
   char addr1[IP_ADDR_STR_LEN];
   char addr2[IP_ADDR_STR_LEN];
 
+  if (len < sizeof(*hdr)) {
+    errorf("too short");
+    return;
+  }
+  if (cksum16((uint16_t *)data, len, 0) != 0) {
+    errorf("checksum error");
+    return;
+  }
+
   debugf("%s => %s, len=%zu", ip_addr_ntop(iphdr->src, addr1, sizeof(addr1)),
          ip_addr_ntop(iphdr->dst, addr2, sizeof(addr2)), len);
-  debugdump(data, len);
+  icmp_print(data, len);
 }
 
 int icmp_init(void) {

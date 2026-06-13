@@ -277,7 +277,7 @@ static ssize_t ip_build_packet(uint8_t protocol, const uint8_t *data, size_t len
   hdr->src = src;
   hdr->dst = dst;
   hdr->sum = cksum16((uint16_t *)hdr, hlen, 0); /* don't convert byteorder */
-  memcpy(buf + len, data, len);
+  memcpy(buf + hlen, data, len);
   ip_print(buf, total);
   return (ssize_t)total;
 }
