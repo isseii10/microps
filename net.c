@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "icmp.h"
 #include "ip.h"
 #include "platform.h"
 
@@ -185,6 +186,10 @@ int net_init(void) {
   }
   if (ip_init() == -1) {
     errorf("ip_init() failure");
+    return -1;
+  }
+  if (icmp_init() == -1) {
+    errorf("icmp_init() failure");
     return -1;
   }
   infof("success");
