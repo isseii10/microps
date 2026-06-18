@@ -7,11 +7,15 @@
 #include "intr.h"
 #include "platform.h"
 
+#include "timer.h"
 #include "util.h"
 
 int platform_init(void) {
   srandom(time(NULL));
   if (intr_init() == -1) {
+    return -1;
+  }
+  if (timer_init() == -1) {
     return -1;
   }
   return 0;
@@ -21,11 +25,17 @@ int platform_run(void) {
   if (intr_run() == -1) {
     return -1;
   }
+  if (timer_run() == -1) {
+    return -1;
+  }
   return 0;
 }
 
 int platform_shutdown(void) {
   if (intr_shutdown() == -1) {
+    return -1;
+  }
+  if (timer_shutdown() == -1) {
     return -1;
   }
   return 0;
