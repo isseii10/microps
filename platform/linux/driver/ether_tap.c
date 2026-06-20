@@ -144,7 +144,7 @@ static int ether_tap_input(struct net_device *dev, uint8_t *frame, size_t flen) 
     return -1;
   }
   hdr = (struct ether_hdr *)frame;
-  if (memcpy(dev->addr, hdr->dst, ETHER_ADDR_LEN) != 0) {
+  if (memcmp(dev->addr, hdr->dst, ETHER_ADDR_LEN) != 0) {
     if (memcmp(ETHER_ADDR_BROADCAST, hdr->dst, ETHER_ADDR_LEN) != 0) {
       /* for other host */
       return -1;
