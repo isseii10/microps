@@ -8,7 +8,6 @@
 #include "platform.h"
 
 #include "ip.h"
-#include "net.h"
 #include "tcp.h"
 #include "util.h"
 
@@ -24,26 +23,23 @@
 
 #define TCP_PCB_SIZE 16
 
-#define TCP_STATE_NONE         0
-#define TCP_STATE_CLOSED       1
-#define TCP_STATE_LISTEN       2
-#define TCP_STATE_SYN_SENT     3
+#define TCP_STATE_NONE 0
+#define TCP_STATE_CLOSED 1
+#define TCP_STATE_LISTEN 2
+#define TCP_STATE_SYN_SENT 3
 #define TCP_STATE_SYN_RECEIVED 4
-#define TCP_STATE_ESTABLISHED  5
-#define TCP_STATE_FIN_WAIT1    6
-#define TCP_STATE_FIN_WAIT2    7
-#define TCP_STATE_CLOSE_WAIT   8
-#define TCP_STATE_CLOSING      9
-#define TCP_STATE_LAST_ACK    10
-#define TCP_STATE_TIME_WAIT   11
+#define TCP_STATE_ESTABLISHED 5
+#define TCP_STATE_FIN_WAIT1 6
+#define TCP_STATE_FIN_WAIT2 7
+#define TCP_STATE_CLOSE_WAIT 8
+#define TCP_STATE_CLOSING 9
+#define TCP_STATE_LAST_ACK 10
+#define TCP_STATE_TIME_WAIT 11
 
-#define TCP_STATE_CHANGE(x, y)          \
-    do {                                \
-        debugf("desc=%d, %s => %s",     \
-            tcp_pcb_desc((x)),          \
-            tcp_state_ntoa((x)->state), \
-            tcp_state_ntoa((y)));       \
-        (x)->state = (y);               \
+#define TCP_STATE_CHANGE(x, y)                                                                                         \
+    do {                                                                                                               \
+        debugf("desc=%d, %s => %s", tcp_pcb_desc((x)), tcp_state_ntoa((x)->state), tcp_state_ntoa((y)));               \
+        (x)->state = (y);                                                                                              \
     } while (0);
 
 struct pseudo_hdr {
@@ -110,15 +106,10 @@ tcp_flg_ntoa(uint8_t flg)
 {
     static char str[9];
 
-    // clang-format off
-    snprintf(str, sizeof(str), "--%c%c%c%c%c%c",
-        TCP_FLG_ISSET(flg, TCP_FLG_URG) ? 'U' : '-',
-        TCP_FLG_ISSET(flg, TCP_FLG_ACK) ? 'A' : '-',
-        TCP_FLG_ISSET(flg, TCP_FLG_PSH) ? 'P' : '-',
-        TCP_FLG_ISSET(flg, TCP_FLG_RST) ? 'R' : '-',
-        TCP_FLG_ISSET(flg, TCP_FLG_SYN) ? 'S' : '-',
-        TCP_FLG_ISSET(flg, TCP_FLG_FIN) ? 'F' : '-');
-    // clang-format on
+    snprintf(str, sizeof(str), "--%c%c%c%c%c%c", TCP_FLG_ISSET(flg, TCP_FLG_URG) ? 'U' : '-',
+             TCP_FLG_ISSET(flg, TCP_FLG_ACK) ? 'A' : '-', TCP_FLG_ISSET(flg, TCP_FLG_PSH) ? 'P' : '-',
+             TCP_FLG_ISSET(flg, TCP_FLG_RST) ? 'R' : '-', TCP_FLG_ISSET(flg, TCP_FLG_SYN) ? 'S' : '-',
+             TCP_FLG_ISSET(flg, TCP_FLG_FIN) ? 'F' : '-');
     return str;
 }
 
@@ -189,8 +180,8 @@ tcp_print(const uint8_t *data, size_t len)
     hdr = (struct tcp_hdr *)data;
     fprintf(stderr, "        src: %u\n", ntoh16(hdr->src));
     fprintf(stderr, "        dst: %u\n", ntoh16(hdr->dst));
-    fprintf(stderr, "        seq: %u\n", ntoh16(hdr->seq));
-    fprintf(stderr, "        ack: %u\n", ntoh16(hdr->ack));
+    fprintf(stderr, "        seq: %u\n", ntoh32(hdr->seq));
+    fprintf(stderr, "        ack: %u\n", ntoh32(hdr->ack));
     hlen = (hdr->off >> 4) << 2;
     fprintf(stderr, "        off: 0x%02x (%u) (options: %ld, payload: %ld)\n", hdr->off, hlen, hlen - sizeof(*hdr),
             len - hlen);
@@ -201,14 +192,14 @@ tcp_print(const uint8_t *data, size_t len)
     opt = (uint8_t *)(hdr + 1);
     while (opt < (uint8_t *)hdr + hlen) {
         if (*opt == 0) {
-            fprintf(stderr, "         opt[%d]: kind=%u (%s)\n", i++, *opt, tcp_opt_ntoa(*opt));
+            fprintf(stderr, "     opt[%d]: kind=%u (%s)\n", i++, *opt, tcp_opt_ntoa(*opt));
             break;
         }
         if (*opt == 1) {
-            fprintf(stderr, "         opt[%d]: kind=%u (%s)\n", i++, *opt, tcp_opt_ntoa(*opt));
+            fprintf(stderr, "     opt[%d]: kind=%u (%s)\n", i++, *opt, tcp_opt_ntoa(*opt));
             opt++;
         } else {
-            fprintf(stderr, "         opt[%d]: kind=%u (%s), len=%u\n", i++, *opt, tcp_opt_ntoa(*opt), *(opt + 1));
+            fprintf(stderr, "     opt[%d]: kind=%u (%s), len=%u\n", i++, *opt, tcp_opt_ntoa(*opt), *(opt + 1));
             opt += *(opt + 1);
         }
     }
@@ -227,39 +218,137 @@ tcp_print(const uint8_t *data, size_t len)
 static int
 tcp_pcb_desc(struct tcp_pcb *pcb)
 {
+    return indexof(pcbs, pcb);
 }
 
 static struct tcp_pcb *
 tcp_pcb_get(int desc)
 {
+    struct tcp_pcb *pcb;
+
+    if (desc < 0 || (int)countof(pcbs) <= desc) {
+        /* out of range */
+        return NULL;
+    }
+    pcb = &pcbs[desc];
+    if (pcb->state == TCP_STATE_NONE) {
+        return NULL;
+    }
+    return pcb;
 }
 
 static struct tcp_pcb *
 tcp_pcb_alloc(void)
 {
+    struct tcp_pcb *pcb;
+
+    for (pcb = pcbs; pcb < tailof(pcbs); pcb++) {
+        if (pcb->state == TCP_STATE_NONE) {
+            pcb->state = TCP_STATE_CLOSED;
+            sched_task_init(&pcb->task);
+            return pcb;
+        }
+    }
+    return NULL;
 }
 
 static void
 tcp_pcb_release(struct tcp_pcb *pcb)
 {
+    if (sched_task_destroy(&pcb->task) != 0) {
+        debugf("pending, desc=%d", tcp_pcb_desc(pcb));
+        sched_task_wakeup(&pcb->task);
+        return;
+    }
+    memset(pcb, 0, sizeof(*pcb));
+    debugf("successs, desc=%d", tcp_pcb_desc(pcb));
 }
 
 static struct tcp_pcb *
 tcp_pcb_select(ip_endp_t key1, ip_endp_t key2)
 {
+    struct tcp_pcb *pcb, *candidate = NULL;
+
+    for (pcb = pcbs; pcb < tailof(pcbs); pcb++) {
+        if (pcb->local.port != key1.port) {
+            continue;
+        }
+        if (pcb->local.addr == key1.addr || pcb->local.addr == IP_ADDR_ANY || key1.addr != IP_ADDR_ANY) {
+            if ((pcb->remote.addr == key2.addr && pcb->remote.port == key2.port) ||
+                (pcb->remote.addr == IP_ADDR_ANY && pcb->remote.port == 0) ||
+                (key2.addr == IP_ADDR_ANY && key2.port == 0)) {
+                if (pcb->state != TCP_STATE_LISTEN) {
+                    return pcb;
+                }
+                candidate = pcb;
+            }
+        }
+    }
+    return candidate;
 }
 
 static ssize_t
-tcp_output_segment(uint32_t seq, uint32_t ack, uint8_t flg, uint16_t wnd,
-                   const uint8_t *data, size_t len, ip_endp_t local, ip_endp_t remote)
+tcp_output_segment(uint32_t seq, uint32_t ack, uint8_t flg, uint16_t wnd, const uint8_t *data, size_t len,
+                   ip_endp_t local, ip_endp_t remote)
 {
+    uint8_t buf[IP_PAYLOAD_SIZE_MAX] = {0};
+    struct tcp_hdr *hdr;
+    uint8_t hlen;
+    struct pseudo_hdr pseudo;
+    uint16_t psum;
+    uint16_t total;
+    char ep1[IP_ENDP_STR_LEN];
+    char ep2[IP_ENDP_STR_LEN];
+
+    hdr = (struct tcp_hdr *)buf;
+    hdr->src = local.port;
+    hdr->dst = remote.port;
+    hdr->seq = hton32(seq);
+    hdr->ack = hton32(ack);
+    hlen = sizeof(*hdr);
+    hdr->off = (hlen >> 2) << 4;
+    hdr->flg = flg;
+    hdr->wnd = hton16(wnd);
+    hdr->sum = 0;
+    hdr->up = 0;
+    memcpy((uint8_t *)hdr + hlen, data, len);
+    pseudo.src = local.addr;
+    pseudo.dst = remote.addr;
+    pseudo.zero = 0;
+    pseudo.protocol = IP_PROTOCOL_TCP;
+    total = hlen + len;
+    pseudo.len = hton16(total);
+    psum = ~cksum16((uint16_t *)&pseudo, sizeof(pseudo), 0);
+    hdr->sum = cksum16((uint16_t *)hdr, total, psum);
+    debugf("%s => %s, len=%zu", ip_endp_ntop(local, ep1, sizeof(ep1)), ip_endp_ntop(remote, ep2, sizeof(ep2)), total);
+    tcp_print(buf, total);
+    if (ip_output(IP_PROTOCOL_TCP, buf, total, local.addr, remote.addr) == -1) {
+        return -1;
+    }
+    return len;
 }
 
 /* rfc793 - section 3.9 [Event Processing > SEGMENT ARRIVES] */
 static void
-tcp_segment_arrives(struct seg_info *seg, uint8_t flags, const uint8_t *data, size_t len,
-                    ip_endp_t local, ip_endp_t remote)
+tcp_segment_arrives(struct seg_info *seg, uint8_t flags, const uint8_t *data, size_t len, ip_endp_t local,
+                    ip_endp_t remote)
 {
+    struct tcp_pcb *pcb;
+
+    pcb = tcp_pcb_select(local, remote);
+    if (!pcb || pcb->state == TCP_STATE_CLOSED) {
+        debugf("PCB is %s", pcb ? "closed" : "not found");
+        if (TCP_FLG_ISSET(flags, TCP_FLG_RST)) {
+            return;
+        }
+        if (!TCP_FLG_ISSET(flags, TCP_FLG_ACK)) {
+            tcp_output_segment(0, seg->seq + seg->len, TCP_FLG_RST | TCP_FLG_ACK, 0, NULL, 0, local, remote);
+        } else {
+            tcp_output_segment(seg->ack, 0, TCP_FLG_RST, 0, NULL, 0, local, remote);
+        }
+        return;
+    }
+    /* TODO: implemented in the next step */
 }
 
 static void
@@ -271,6 +360,8 @@ tcp_input(const struct ip_hdr *iphdr, const uint8_t *data, size_t len, struct ip
     ip_endp_t src, dst;
     char ep1[IP_ENDP_STR_LEN];
     char ep2[IP_ENDP_STR_LEN];
+    uint8_t hlen;
+    struct seg_info seg;
 
     if (len < sizeof(*hdr)) {
         errorf("too short");
@@ -300,6 +391,21 @@ tcp_input(const struct ip_hdr *iphdr, const uint8_t *data, size_t len, struct ip
     }
     debugf("%s => %s, len=%zu, dev=%s", ep1, ep2, len, NET_IFACE(iface)->dev->name);
     tcp_print(data, len);
+    hlen = (hdr->off >> 4) << 2;
+    seg.seq = ntoh32(hdr->seq);
+    seg.ack = ntoh32(hdr->ack);
+    seg.len = len - hlen;
+    if (TCP_FLG_ISSET(hdr->flg, TCP_FLG_SYN)) {
+        seg.len++; /* SYN flag consumes one sequence number */
+    }
+    if (TCP_FLG_ISSET(hdr->flg, TCP_FLG_FIN)) {
+        seg.len++; /* FIN flag consumes one sequence number */
+    }
+    seg.wnd = ntoh16(hdr->wnd);
+    seg.up = ntoh16(hdr->up);
+    lock_acquire(&lock);
+    tcp_segment_arrives(&seg, hdr->flg, (uint8_t *)hdr + hlen, len - hlen, dst, src);
+    lock_release(&lock);
     return;
 }
 
