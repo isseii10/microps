@@ -37,29 +37,29 @@
 typedef uint32_t ip_addr_t;
 
 typedef struct {
-  ip_addr_t addr;
-  uint16_t port;
+    ip_addr_t addr;
+    uint16_t port;
 } ip_endp_t;
 
 struct ip_hdr {
-  uint8_t vhl;
-  uint8_t tos;
-  uint16_t total;
-  uint16_t id;
-  uint16_t offset;
-  uint8_t ttl;
-  uint8_t protocol;
-  uint16_t sum;
-  ip_addr_t src;
-  ip_addr_t dst;
+    uint8_t vhl;
+    uint8_t tos;
+    uint16_t total;
+    uint16_t id;
+    uint16_t offset;
+    uint8_t ttl;
+    uint8_t protocol;
+    uint16_t sum;
+    ip_addr_t src;
+    ip_addr_t dst;
 };
 
 struct ip_iface {
-  struct net_iface iface;
-  struct ip_iface *next;
-  ip_addr_t unicast;
-  ip_addr_t netmask;
-  ip_addr_t broadcast;
+    struct net_iface iface;
+    struct ip_iface *next;
+    ip_addr_t unicast;
+    ip_addr_t netmask;
+    ip_addr_t broadcast;
 };
 
 typedef void (*ip_protocol_handler_t)(const struct ip_hdr *iphdr, const uint8_t *data, size_t len,

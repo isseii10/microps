@@ -27,9 +27,9 @@
 #define ETHER_TYPE_IPV6 0x86dd
 
 struct ether_hdr {
-  uint8_t dst[ETHER_ADDR_LEN];
-  uint8_t src[ETHER_ADDR_LEN];
-  uint16_t type;
+    uint8_t dst[ETHER_ADDR_LEN];
+    uint8_t src[ETHER_ADDR_LEN];
+    uint16_t type;
 };
 
 extern const uint8_t ETHER_ADDR_ANY[ETHER_ADDR_LEN];

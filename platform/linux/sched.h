@@ -5,10 +5,10 @@
 #include <time.h>
 
 struct sched_task {
-  struct sched_task *next;
-  pthread_cond_t cond;
-  int interrupted;
-  int wc; /* wait count */
+    struct sched_task *next;
+    pthread_cond_t cond;
+    int interrupted;
+    int wc; /* wait count */
 };
 
 #define SCHED_TASK_INITIALIZER {NULL, PTHREAD_COND_INITIALIZER, 0, 0}

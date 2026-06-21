@@ -18,24 +18,24 @@
  */
 
 #define timeval_add_usec(x, y)                                                                                         \
-  do {                                                                                                                 \
-    (x)->tv_sec += (y) / 1000000;                                                                                      \
-    (x)->tv_usec += (y) % 1000000;                                                                                     \
-    if ((x)->tv_usec >= 1000000) {                                                                                     \
-      (x)->tv_sec += 1;                                                                                                \
-      (x)->tv_usec -= 1000000;                                                                                         \
-    }                                                                                                                  \
-  } while (0);
+    do {                                                                                                               \
+        (x)->tv_sec += (y) / 1000000;                                                                                  \
+        (x)->tv_usec += (y) % 1000000;                                                                                 \
+        if ((x)->tv_usec >= 1000000) {                                                                                 \
+            (x)->tv_sec += 1;                                                                                          \
+            (x)->tv_usec -= 1000000;                                                                                   \
+        }                                                                                                              \
+    } while (0);
 
 #define timespec_add_nsec(x, y)                                                                                        \
-  do {                                                                                                                 \
-    (x)->tv_sec += (y) / 1000000000;                                                                                   \
-    (x)->tv_nsec += (y) % 1000000000;                                                                                  \
-    if ((x)->tv_nsec >= 1000000000) {                                                                                  \
-      (x)->tv_sec += 1;                                                                                                \
-      (x)->tv_nsec -= 1000000000;                                                                                      \
-    }                                                                                                                  \
-  } while (0);
+    do {                                                                                                               \
+        (x)->tv_sec += (y) / 1000000000;                                                                               \
+        (x)->tv_nsec += (y) % 1000000000;                                                                              \
+        if ((x)->tv_nsec >= 1000000000) {                                                                              \
+            (x)->tv_sec += 1;                                                                                          \
+            (x)->tv_nsec -= 1000000000;                                                                                \
+        }                                                                                                              \
+    } while (0);
 
 /*
  * Logging
@@ -62,14 +62,14 @@ extern void hexdump(FILE *fp, const void *data, size_t size);
  */
 
 struct queue_entry {
-  struct queue_entry *next;
-  /* data bytes exists after this structure. */
+    struct queue_entry *next;
+    /* data bytes exists after this structure. */
 };
 
 struct queue {
-  struct queue_entry *head;
-  struct queue_entry *tail;
-  size_t num;
+    struct queue_entry *head;
+    struct queue_entry *tail;
+    size_t num;
 };
 
 typedef void (*queue_func_t)(void *arg, struct queue_entry *entry);
