@@ -10,6 +10,7 @@
 #include "icmp.h"
 #include "ip.h"
 #include "net.h"
+#include "tcp.h"
 #include "udp.h"
 #include "util.h"
 
@@ -98,10 +99,21 @@ cleanup(void)
 static int
 app_main(void)
 {
+    int desc;
+    ip_endp_t local, remote;
+
+    ip_endp_pton("0.0.0.0:7", &local);
+    ip_endp_pton("0.0.0.0:0", &remote);
+    desc = tcp_cmd_open(local, remote, 0);
+    if (desc == -1) {
+        errorf("tcp_cmd_open() failure");
+        return -1;
+    }
     debugf("press Ctrl+C to terminate");
     while (!terminate) {
         sleep(1);
     }
+    tcp_cmd_close(desc);
     debugf("terminate");
     return 0;
 }
