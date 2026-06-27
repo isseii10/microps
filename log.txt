@@ -1,64 +1,243 @@
-10:06:44.020 [I] setup: setup protocol stack... (test/test.c:47)
-10:06:44.020 [I] net_init: initialize... (net.c:284)
-10:06:44.020 [I] intr_register: success, irq=10 (platform/linux/intr.c:53)
-10:06:44.020 [I] intr_register: success, irq=14 (platform/linux/intr.c:53)
-10:06:44.020 [I] intr_register: success, irq=12 (platform/linux/intr.c:53)
-10:06:44.020 [I] net_protocol_register: success, type=0x0806 (net.c:193)
-10:06:44.020 [I] timer_register: success, interval={1, 0} (platform/linux/timer.c:40)
-10:06:44.020 [I] net_protocol_register: success, type=0x0800 (net.c:193)
-10:06:44.020 [I] ip_protocol_register: success, protocol=1 (ip.c:281)
-10:06:44.020 [I] ip_protocol_register: success, protocol=17 (ip.c:281)
-10:06:44.020 [I] ip_protocol_register: success, protocol=6 (ip.c:281)
-10:06:44.020 [I] timer_register: success, interval={0, 100000} (platform/linux/timer.c:40)
-10:06:44.020 [I] net_init: success (net.c:309)
-10:06:44.020 [I] net_device_register: success, dev=net0, type=0x0001 (net.c:65)
-10:06:44.020 [I] loopback_init: success, dev=net0 (driver/loopback.c:42)
-10:06:44.020 [I] ip_iface_register: dev=net0, 127.0.0.1, 255.0.0.0, 127.255.255.255 (ip.c:231)
-10:06:44.020 [I] net_device_add_iface: success, dev=net0 (net.c:150)
-10:06:44.020 [I] ip_route_add: 127.0.0.0/255.0.0.0 dev net0 src 127.0.0.1 (ip.c:133)
-10:06:44.020 [I] ether_tap_init: name=tap0, addr=00:00:5e:00:53:01 (platform/linux/driver/ether_tap.c:207)
-10:06:44.020 [I] net_device_register: success, dev=net1, type=0x0002 (net.c:65)
-10:06:44.020 [I] intr_register: success, irq=35 (platform/linux/intr.c:53)
-10:06:44.020 [I] ether_tap_init: success, dev=net1, irq=35 (platform/linux/driver/ether_tap.c:244)
-10:06:44.020 [I] ip_iface_register: dev=net1, 192.0.2.2, 255.255.255.0, 192.0.2.255 (ip.c:231)
-10:06:44.020 [I] net_device_add_iface: success, dev=net1 (net.c:150)
-10:06:44.020 [I] ip_route_add: 192.0.2.0/255.255.255.0 dev net1 src 192.0.2.2 (ip.c:133)
-10:06:44.020 [I] ip_route_add: 0.0.0.0/0.0.0.0 via 192.0.2.1 dev net1 src 192.0.2.2 (ip.c:129)
-10:06:44.020 [I] net_run: startup... (net.c:318)
-10:06:44.021 [I] intr_main: start... (platform/linux/intr.c:69)
-10:06:44.021 [I] timer_run: interval={0, 1000000}, initial={0, 1000000} (platform/linux/timer.c:87)
-10:06:44.021 [I] net_device_open: dev=net1 (net.c:72)
-10:06:44.021 [I] ether_tap_open: dev=net1, addr=00:00:5e:00:53:01 (platform/linux/driver/ether_tap.c:110)
-10:06:44.022 [I] net_device_open: dev=net0 (net.c:72)
-10:06:44.022 [I] net_run: success (net.c:326)
-10:06:44.022 [D] tcp_cmd_open: mode=active, local=0.0.0.0:0, remote=192.0.2.1:10007 (tcp.c:909)
-10:06:44.022 [D] tcp_cmd_open: select local address, addr=192.0.2.2 (tcp.c:921)
-10:06:44.022 [D] tcp_cmd_open: dinamic assign local port, port=49152 (tcp.c:927)
-10:06:44.022 [D] tcp_retrans_queue_add: desc=0, num=1, seq=2107871290 (tcp.c:388)
-10:06:44.022 [D] tcp_output_segment: 192.0.2.2:49152 => 192.0.2.1:10007, len=20 (tcp.c:352)
-        src: 49152
-        dst: 10007
-        seq: 2107871290
+12:43:20.412 [I] setup: setup protocol stack... (test/test.c:47)
+12:43:20.416 [I] net_init: initialize... (net.c:284)
+12:43:20.416 [I] intr_register: success, irq=10 (platform/linux/intr.c:53)
+12:43:20.416 [I] intr_register: success, irq=14 (platform/linux/intr.c:53)
+12:43:20.416 [I] intr_register: success, irq=12 (platform/linux/intr.c:53)
+12:43:20.416 [I] net_protocol_register: success, type=0x0806 (net.c:193)
+12:43:20.416 [I] timer_register: success, interval={1, 0} (platform/linux/timer.c:40)
+12:43:20.416 [I] net_protocol_register: success, type=0x0800 (net.c:193)
+12:43:20.416 [I] ip_protocol_register: success, protocol=1 (ip.c:281)
+12:43:20.416 [I] ip_protocol_register: success, protocol=17 (ip.c:281)
+12:43:20.416 [I] ip_protocol_register: success, protocol=6 (ip.c:281)
+12:43:20.416 [I] timer_register: success, interval={0, 100000} (platform/linux/timer.c:40)
+12:43:20.416 [I] net_init: success (net.c:309)
+12:43:20.416 [I] net_device_register: success, dev=net0, type=0x0001 (net.c:65)
+12:43:20.416 [I] loopback_init: success, dev=net0 (driver/loopback.c:42)
+12:43:20.416 [I] ip_iface_register: dev=net0, 127.0.0.1, 255.0.0.0, 127.255.255.255 (ip.c:231)
+12:43:20.416 [I] net_device_add_iface: success, dev=net0 (net.c:150)
+12:43:20.416 [I] ip_route_add: 127.0.0.0/255.0.0.0 dev net0 src 127.0.0.1 (ip.c:133)
+12:43:20.416 [I] ether_tap_init: name=tap0, addr=00:00:5e:00:53:01 (platform/linux/driver/ether_tap.c:207)
+12:43:20.416 [I] net_device_register: success, dev=net1, type=0x0002 (net.c:65)
+12:43:20.416 [I] intr_register: success, irq=35 (platform/linux/intr.c:53)
+12:43:20.416 [I] ether_tap_init: success, dev=net1, irq=35 (platform/linux/driver/ether_tap.c:244)
+12:43:20.416 [I] ip_iface_register: dev=net1, 192.0.2.2, 255.255.255.0, 192.0.2.255 (ip.c:231)
+12:43:20.416 [I] net_device_add_iface: success, dev=net1 (net.c:150)
+12:43:20.416 [I] ip_route_add: 192.0.2.0/255.255.255.0 dev net1 src 192.0.2.2 (ip.c:133)
+12:43:20.416 [I] ip_route_add: 0.0.0.0/0.0.0.0 via 192.0.2.1 dev net1 src 192.0.2.2 (ip.c:129)
+12:43:20.416 [I] net_run: startup... (net.c:318)
+12:43:20.416 [I] intr_main: start... (platform/linux/intr.c:69)
+12:43:20.417 [I] timer_run: interval={0, 1000000}, initial={0, 1000000} (platform/linux/timer.c:87)
+12:43:20.417 [I] net_device_open: dev=net1 (net.c:72)
+12:43:20.419 [I] ether_tap_open: dev=net1, addr=00:00:5e:00:53:01 (platform/linux/driver/ether_tap.c:110)
+12:43:20.419 [I] net_device_open: dev=net0 (net.c:72)
+12:43:20.419 [I] net_run: success (net.c:326)
+12:43:20.419 [D] tcp_cmd_bind: success: local=0.0.0.0:7 (tcp.c:1339)
+12:43:20.419 [D] tcp_cmd_listen: desc=0, CLOSED => LISTEN (tcp.c:1367)
+12:44:06.443 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:44:06.443 [D] ether_tap_input: dev=net1, type=0x0806, len=42 (platform/linux/driver/ether_tap.c:164)
+        src: 4a:69:22:d9:65:8e
+        dst: ff:ff:ff:ff:ff:ff
+       type: 0x0806
+12:44:06.443 [D] net_input: dev=net1, type=0x0806, len=28 (net.c:240)
+12:44:06.443 [D] net_protocol_queue_push: success, proto=0x0806 queue.num=1 (net.c:214)
+12:44:06.443 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:44:06.443 [D] net_protocol_queue_pop: success, proto=0x0806 queue.num=0 (net.c:230)
+12:44:06.443 [D] arp_input: dev=net1, len=28 (arp.c:242)
+        hrd: 0x0001
+        pro: 0x0800
+        hln: 6
+        pln: 4
+         op: 1 (Request)
+        sha: 4a:69:22:d9:65:8e
+        spa: 192.0.2.1
+        tha: 00:00:00:00:00:00
+        tpa: 192.0.2.2
+12:44:06.443 [D] arp_cache_update: cache not found (arp.c:158)
+12:44:06.443 [D] arp_cache_insert: INSERT: pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:184)
+12:44:06.443 [D] arp_reply: dev=net1, len=28 (arp.c:202)
+        hrd: 0x0001
+        pro: 0x0800
+        hln: 6
+        pln: 4
+         op: 2 (Reply)
+        sha: 00:00:5e:00:53:01
+        spa: 192.0.2.2
+        tha: 4a:69:22:d9:65:8e
+        tpa: 192.0.2.1
+12:44:06.443 [D] net_device_output: dev=net1, type=0x0806, len=28 (net.c:108)
+12:44:06.443 [D] ether_tap_output: dev=net1, type=0x0806, len=60 (platform/linux/driver/ether_tap.c:137)
+        src: 00:00:5e:00:53:01
+        dst: 4a:69:22:d9:65:8e
+       type: 0x0806
+12:44:06.444 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:44:06.444 [D] ether_tap_input: dev=net1, type=0x0800, len=74 (platform/linux/driver/ether_tap.c:164)
+        src: 4a:69:22:d9:65:8e
+        dst: 00:00:5e:00:53:01
+       type: 0x0800
+12:44:06.444 [D] net_input: dev=net1, type=0x0800, len=60 (net.c:240)
+12:44:06.444 [D] net_protocol_queue_push: success, proto=0x0800 queue.num=1 (net.c:214)
+12:44:06.444 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:44:06.444 [D] net_protocol_queue_pop: success, proto=0x0800 queue.num=0 (net.c:230)
+12:44:06.444 [D] ip_input: dev=net1, len=60 (ip.c:326)
+12:44:06.444 [D] ip_input: permit, dev=net1, iface=192.0.2.2 (ip.c:374)
+        vhl: 0x45 [v: 4, hl: 5 (20)]
+        tos: 0x00
+      total: 60 (payload: 40)
+         id: 41681
+     offset: 0x4000 [flags=2, offset=0]
+        ttl: 64
+   protocol: 6
+        sum: 0x13e7
+        src: 192.0.2.1
+        dst: 192.0.2.2
+12:44:06.444 [D] tcp_input: 192.0.2.1:35606 => 192.0.2.2:7, len=40, dev=net1 (tcp.c:950)
+        src: 35606
+        dst: 7
+        seq: 2729314313
         ack: 0
-        off: 0x50 (20) (options: 0, payload: 0)
+        off: 0xa0 (40) (options: 20, payload: 0)
         flg: 0x02 (------S-)
-        wnd: 65535
-        sum: 0x36e9
+        wnd: 64240
+        sum: 0x5468
          up: 0
-10:06:44.022 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
+     opt[0]: kind=2 (Maximum Segment Size (MSS)), len=4
+     opt[1]: kind=4 (SACK Permitted), len=2
+     opt[2]: kind=8 (Timestamps), len=10
+     opt[3]: kind=1 (No-Operation (NOP))
+     opt[4]: kind=3 (Window Scale), len=3
+12:44:06.444 [D] tcp_segment_arrives: desc=0, state=LISTEN (tcp.c:512)
+12:44:06.444 [D] tcp_segment_arrives: allocate PCB for new connection, desc=1, state=CLOSED (tcp.c:545)
+12:44:06.444 [D] tcp_retrans_queue_add: desc=1, num=1, seq=1752666000 (tcp.c:412)
+12:44:06.444 [D] tcp_output_segment: 192.0.2.2:7 => 192.0.2.1:35606, len=20 (tcp.c:376)
+        src: 7
+        dst: 35606
+        seq: 1752666000
+        ack: 2729314314
+        off: 0x50 (20) (options: 0, payload: 0)
+        flg: 0x12 (---A--S-)
+        wnd: 65535
+        sum: 0xfdf0
+         up: 0
+12:44:06.444 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
         vhl: 0x45 [v: 4, hl: 5 (20)]
         tos: 0x00
       total: 40 (payload: 20)
-         id: 60455
+         id: 8663
      offset: 0x0000 [flags=0, offset=0]
         ttl: 255
    protocol: 6
-        sum: 0x4ba4
+        sum: 0x15f5
         src: 192.0.2.2
         dst: 192.0.2.1
-10:06:44.022 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
-10:06:44.022 [D] arp_resolve: cache not found, pa=192.0.2.1 (arp.c:283)
-10:06:44.022 [D] arp_request: dev=net1, len=28 (arp.c:221)
+12:44:06.444 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
+12:44:06.444 [D] arp_resolve: resolved, pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:301)
+12:44:06.444 [D] net_device_output: dev=net1, type=0x0800, len=40 (net.c:108)
+12:44:06.444 [D] ether_tap_output: dev=net1, type=0x0800, len=60 (platform/linux/driver/ether_tap.c:137)
+        src: 00:00:5e:00:53:01
+        dst: 4a:69:22:d9:65:8e
+       type: 0x0800
+12:44:06.444 [D] tcp_segment_arrives: desc=1, CLOSED => SYN_RECEIVED (tcp.c:559)
+12:44:06.444 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:44:06.444 [D] ether_tap_input: dev=net1, type=0x0800, len=54 (platform/linux/driver/ether_tap.c:164)
+        src: 4a:69:22:d9:65:8e
+        dst: 00:00:5e:00:53:01
+       type: 0x0800
+12:44:06.444 [D] net_input: dev=net1, type=0x0800, len=40 (net.c:240)
+12:44:06.444 [D] net_protocol_queue_push: success, proto=0x0800 queue.num=1 (net.c:214)
+12:44:06.444 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:44:06.444 [D] net_protocol_queue_pop: success, proto=0x0800 queue.num=0 (net.c:230)
+12:44:06.444 [D] ip_input: dev=net1, len=40 (ip.c:326)
+12:44:06.444 [D] ip_input: permit, dev=net1, iface=192.0.2.2 (ip.c:374)
+        vhl: 0x45 [v: 4, hl: 5 (20)]
+        tos: 0x00
+      total: 40 (payload: 20)
+         id: 41682
+     offset: 0x4000 [flags=2, offset=0]
+        ttl: 64
+   protocol: 6
+        sum: 0x13fa
+        src: 192.0.2.1
+        dst: 192.0.2.2
+12:44:06.444 [D] tcp_input: 192.0.2.1:35606 => 192.0.2.2:7, len=20, dev=net1 (tcp.c:950)
+        src: 35606
+        dst: 7
+        seq: 2729314314
+        ack: 1752666001
+        off: 0x50 (20) (options: 0, payload: 0)
+        flg: 0x10 (---A----)
+        wnd: 64240
+        sum: 0x0301
+         up: 0
+12:44:06.444 [D] tcp_segment_arrives: desc=1, state=SYN_RECEIVED (tcp.c:512)
+12:44:06.444 [D] tcp_segment_arrives: desc=1, SYN_RECEIVED => ESTABLISHED (tcp.c:763)
+12:44:06.444 [D] tcp_retrans_queue_cleanup: desc=1, num=0, seq=1752666000 (tcp.c:435)
+12:44:06.444 [D] tcp_cmd_accept: success: desc=1, local=192.0.2.2:7, remote=192.0.2.1:35606 (tcp.c:1422)
+12:44:06.444 [D] app_main: connection from 192.0.2.1:35606, desc=1 (test/test.c:131)
+12:44:06.444 [D] app_main: press CTRL+C to terminate (test/test.c:132)
+12:44:37.468 [D] arp_cache_delete: DELETE: pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:113)
+12:46:18.081 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:46:18.081 [D] ether_tap_input: dev=net1, type=0x0800, len=74 (platform/linux/driver/ether_tap.c:164)
+        src: 4a:69:22:d9:65:8e
+        dst: 00:00:5e:00:53:01
+       type: 0x0800
+12:46:18.081 [D] net_input: dev=net1, type=0x0800, len=60 (net.c:240)
+12:46:18.081 [D] net_protocol_queue_push: success, proto=0x0800 queue.num=1 (net.c:214)
+12:46:18.081 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:46:18.081 [D] net_protocol_queue_pop: success, proto=0x0800 queue.num=0 (net.c:230)
+12:46:18.081 [D] ip_input: dev=net1, len=60 (ip.c:326)
+12:46:18.081 [D] ip_input: permit, dev=net1, iface=192.0.2.2 (ip.c:374)
+        vhl: 0x45 [v: 4, hl: 5 (20)]
+        tos: 0x00
+      total: 60 (payload: 40)
+         id: 55025
+     offset: 0x4000 [flags=2, offset=0]
+        ttl: 64
+   protocol: 6
+        sum: 0xdfc6
+        src: 192.0.2.1
+        dst: 192.0.2.2
+12:46:18.081 [D] tcp_input: 192.0.2.1:36348 => 192.0.2.2:7, len=40, dev=net1 (tcp.c:950)
+        src: 36348
+        dst: 7
+        seq: 92518866
+        ack: 0
+        off: 0xa0 (40) (options: 20, payload: 0)
+        flg: 0x02 (------S-)
+        wnd: 64240
+        sum: 0x3aad
+         up: 0
+     opt[0]: kind=2 (Maximum Segment Size (MSS)), len=4
+     opt[1]: kind=4 (SACK Permitted), len=2
+     opt[2]: kind=8 (Timestamps), len=10
+     opt[3]: kind=1 (No-Operation (NOP))
+     opt[4]: kind=3 (Window Scale), len=3
+12:46:18.081 [D] tcp_segment_arrives: desc=0, state=LISTEN (tcp.c:512)
+12:46:18.081 [D] tcp_segment_arrives: allocate PCB for new connection, desc=2, state=CLOSED (tcp.c:545)
+12:46:18.081 [D] tcp_retrans_queue_add: desc=2, num=1, seq=144081768 (tcp.c:412)
+12:46:18.081 [D] tcp_output_segment: 192.0.2.2:7 => 192.0.2.1:36348, len=20 (tcp.c:376)
+        src: 7
+        dst: 36348
+        seq: 144081768
+        ack: 92518867
+        off: 0x50 (20) (options: 0, payload: 0)
+        flg: 0x12 (---A--S-)
+        wnd: 65535
+        sum: 0x5276
+         up: 0
+12:46:18.081 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
+        vhl: 0x45 [v: 4, hl: 5 (20)]
+        tos: 0x00
+      total: 40 (payload: 20)
+         id: 49284
+     offset: 0x0000 [flags=0, offset=0]
+        ttl: 255
+   protocol: 6
+        sum: 0x7747
+        src: 192.0.2.2
+        dst: 192.0.2.1
+12:46:18.081 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
+12:46:18.081 [D] arp_resolve: cache not found, pa=192.0.2.1 (arp.c:283)
+12:46:18.081 [D] arp_request: dev=net1, len=28 (arp.c:221)
         hrd: 0x0001
         pro: 0x0800
         hln: 6
@@ -68,22 +247,22 @@
         spa: 192.0.2.2
         tha: 00:00:00:00:00:00
         tpa: 192.0.2.1
-10:06:44.022 [D] net_device_output: dev=net1, type=0x0806, len=28 (net.c:108)
-10:06:44.022 [D] ether_tap_output: dev=net1, type=0x0806, len=60 (platform/linux/driver/ether_tap.c:137)
+12:46:18.081 [D] net_device_output: dev=net1, type=0x0806, len=28 (net.c:108)
+12:46:18.081 [D] ether_tap_output: dev=net1, type=0x0806, len=60 (platform/linux/driver/ether_tap.c:137)
         src: 00:00:5e:00:53:01
         dst: ff:ff:ff:ff:ff:ff
        type: 0x0806
-10:06:44.022 [D] tcp_cmd_open: desc=0, CLOSED => SYN_SENT (tcp.c:956)
-10:06:44.022 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
-10:06:44.022 [D] ether_tap_input: dev=net1, type=0x0806, len=42 (platform/linux/driver/ether_tap.c:164)
+12:46:18.081 [D] tcp_segment_arrives: desc=2, CLOSED => SYN_RECEIVED (tcp.c:559)
+12:46:18.081 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:46:18.081 [D] ether_tap_input: dev=net1, type=0x0806, len=42 (platform/linux/driver/ether_tap.c:164)
         src: 4a:69:22:d9:65:8e
         dst: 00:00:5e:00:53:01
        type: 0x0806
-10:06:44.022 [D] net_input: dev=net1, type=0x0806, len=28 (net.c:240)
-10:06:44.022 [D] net_protocol_queue_push: success, proto=0x0806 queue.num=1 (net.c:214)
-10:06:44.022 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
-10:06:44.022 [D] net_protocol_queue_pop: success, proto=0x0806 queue.num=0 (net.c:230)
-10:06:44.022 [D] arp_input: dev=net1, len=28 (arp.c:242)
+12:46:18.081 [D] net_input: dev=net1, type=0x0806, len=28 (net.c:240)
+12:46:18.081 [D] net_protocol_queue_push: success, proto=0x0806 queue.num=1 (net.c:214)
+12:46:18.081 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:46:18.081 [D] net_protocol_queue_pop: success, proto=0x0806 queue.num=0 (net.c:230)
+12:46:18.081 [D] arp_input: dev=net1, len=28 (arp.c:242)
         hrd: 0x0001
         pro: 0x0800
         hln: 6
@@ -93,208 +272,305 @@
         spa: 192.0.2.1
         tha: 00:00:5e:00:53:01
         tpa: 192.0.2.2
-10:06:44.022 [D] arp_cache_update: UPDATE: pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:164)
-10:06:44.222 [D] tcp_retrans_emit: desc=0, seq=2107871290 (tcp.c:436)
-10:06:44.222 [D] tcp_output_segment: 192.0.2.2:49152 => 192.0.2.1:10007, len=20 (tcp.c:352)
-        src: 49152
-        dst: 10007
-        seq: 2107871290
-        ack: 0
+12:46:18.081 [D] arp_cache_update: UPDATE: pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:164)
+12:46:18.296 [D] tcp_retrans_emit: desc=2, seq=144081768 (tcp.c:460)
+12:46:18.296 [D] tcp_output_segment: 192.0.2.2:7 => 192.0.2.1:36348, len=7531027962997506068 (tcp.c:376)
+        src: 7
+        dst: 36348
+        seq: 144081768
+        ack: 92518867
         off: 0x50 (20) (options: 0, payload: 0)
-        flg: 0x02 (------S-)
-        wnd: 65535
-        sum: 0x36e9
-         up: 0
-10:06:44.222 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
-        vhl: 0x45 [v: 4, hl: 5 (20)]
-        tos: 0x00
-      total: 40 (payload: 20)
-         id: 8666
-     offset: 0x0000 [flags=0, offset=0]
-        ttl: 255
-   protocol: 6
-        sum: 0x15f2
-        src: 192.0.2.2
-        dst: 192.0.2.1
-10:06:44.222 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
-10:06:44.222 [D] arp_resolve: resolved, pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:301)
-10:06:44.222 [D] net_device_output: dev=net1, type=0x0800, len=40 (net.c:108)
-10:06:44.222 [D] ether_tap_output: dev=net1, type=0x0800, len=60 (platform/linux/driver/ether_tap.c:137)
-        src: 00:00:5e:00:53:01
-        dst: 4a:69:22:d9:65:8e
-       type: 0x0800
-10:06:44.222 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
-10:06:44.222 [D] ether_tap_input: dev=net1, type=0x0800, len=58 (platform/linux/driver/ether_tap.c:164)
-        src: 4a:69:22:d9:65:8e
-        dst: 00:00:5e:00:53:01
-       type: 0x0800
-10:06:44.222 [D] net_input: dev=net1, type=0x0800, len=44 (net.c:240)
-10:06:44.222 [D] net_protocol_queue_push: success, proto=0x0800 queue.num=1 (net.c:214)
-10:06:44.222 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
-10:06:44.222 [D] net_protocol_queue_pop: success, proto=0x0800 queue.num=0 (net.c:230)
-10:06:44.222 [D] ip_input: dev=net1, len=44 (ip.c:326)
-10:06:44.222 [D] ip_input: permit, dev=net1, iface=192.0.2.2 (ip.c:374)
-        vhl: 0x45 [v: 4, hl: 5 (20)]
-        tos: 0x00
-      total: 44 (payload: 24)
-         id: 0
-     offset: 0x4000 [flags=2, offset=0]
-        ttl: 64
-   protocol: 6
-        sum: 0xb6c8
-        src: 192.0.2.1
-        dst: 192.0.2.2
-10:06:44.222 [D] tcp_input: 192.0.2.1:10007 => 192.0.2.2:49152, len=24, dev=net1 (tcp.c:826)
-        src: 10007
-        dst: 49152
-        seq: 3782641890
-        ack: 2107871291
-        off: 0x60 (24) (options: 4, payload: 0)
         flg: 0x12 (---A--S-)
-        wnd: 64240
-        sum: 0xb9d1
-         up: 0
-     opt[0]: kind=2 (Maximum Segment Size (MSS)), len=4
-10:06:44.222 [D] tcp_segment_arrives: desc=0, state=SYN_SENT (tcp.c:488)
-10:06:44.222 [D] tcp_retrans_queue_cleanup: desc=0, num=0, seq=2107871290 (tcp.c:411)
-10:06:44.222 [D] tcp_segment_arrives: desc=0, SYN_SENT => ESTABLISHED (tcp.c:566)
-10:06:44.222 [D] tcp_output_segment: 192.0.2.2:49152 => 192.0.2.1:10007, len=20 (tcp.c:352)
-        src: 49152
-        dst: 10007
-        seq: 2107871291
-        ack: 3782641891
-        off: 0x50 (20) (options: 0, payload: 0)
-        flg: 0x10 (---A----)
         wnd: 65535
-        sum: 0xcc7f
+        sum: 0x5276
          up: 0
-10:06:44.222 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
+12:46:18.296 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
         vhl: 0x45 [v: 4, hl: 5 (20)]
         tos: 0x00
       total: 40 (payload: 20)
-         id: 38509
+         id: 54420
      offset: 0x0000 [flags=0, offset=0]
         ttl: 255
    protocol: 6
-        sum: 0xa15e
+        sum: 0x6337
         src: 192.0.2.2
         dst: 192.0.2.1
-10:06:44.222 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
-10:06:44.222 [D] arp_resolve: resolved, pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:301)
-10:06:44.222 [D] net_device_output: dev=net1, type=0x0800, len=40 (net.c:108)
-10:06:44.222 [D] ether_tap_output: dev=net1, type=0x0800, len=60 (platform/linux/driver/ether_tap.c:137)
+12:46:18.296 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
+12:46:18.296 [D] arp_resolve: resolved, pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:301)
+12:46:18.296 [D] net_device_output: dev=net1, type=0x0800, len=40 (net.c:108)
+12:46:18.296 [D] ether_tap_output: dev=net1, type=0x0800, len=60 (platform/linux/driver/ether_tap.c:137)
         src: 00:00:5e:00:53:01
         dst: 4a:69:22:d9:65:8e
        type: 0x0800
-10:06:44.222 [D] tcp_cmd_open: success, local=192.0.2.2:49152, remote=192.0.2.1:10007 (tcp.c:1000)
-10:06:44.222 [D] app_main: press Ctrl+C to terminate (test/test.c:117)
-10:06:45.357 [D] intr_main: IRQ <12> occurred (platform/linux/intr.c:83)
-10:06:45.357 [D] tcp_cmd_receive: interrupted (tcp.c:1143)
-10:06:45.357 [D] tcp_cmd_close: desc=0 (tcp.c:1018)
-10:06:45.357 [D] tcp_cmd_close: close connection (tcp.c:1030)
-10:06:45.357 [D] tcp_retrans_queue_add: desc=0, num=1, seq=2107871291 (tcp.c:388)
-10:06:45.357 [D] tcp_output_segment: 192.0.2.2:49152 => 192.0.2.1:10007, len=3328773858273525780 (tcp.c:352)
-        src: 49152
-        dst: 10007
-        seq: 2107871291
-        ack: 3782641891
-        off: 0x50 (20) (options: 0, payload: 0)
-        flg: 0x11 (---A---F)
-        wnd: 65535
-        sum: 0xcc7e
-         up: 0
-10:06:45.357 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
-        vhl: 0x45 [v: 4, hl: 5 (20)]
-        tos: 0x00
-      total: 40 (payload: 20)
-         id: 20564
-     offset: 0x0000 [flags=0, offset=0]
-        ttl: 255
-   protocol: 6
-        sum: 0xe777
-        src: 192.0.2.2
-        dst: 192.0.2.1
-10:06:45.357 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
-10:06:45.357 [D] arp_resolve: resolved, pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:301)
-10:06:45.357 [D] net_device_output: dev=net1, type=0x0800, len=40 (net.c:108)
-10:06:45.357 [D] ether_tap_output: dev=net1, type=0x0800, len=60 (platform/linux/driver/ether_tap.c:137)
-        src: 00:00:5e:00:53:01
-        dst: 4a:69:22:d9:65:8e
-       type: 0x0800
-10:06:45.357 [D] tcp_cmd_close: desc=0, ESTABLISHED => FIN_WAIT1 (tcp.c:1033)
-10:06:45.357 [D] app_main: terminate (test/test.c:128)
-10:06:45.357 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
-10:06:45.357 [D] ether_tap_input: dev=net1, type=0x0800, len=54 (platform/linux/driver/ether_tap.c:164)
+12:46:18.296 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:46:18.296 [D] ether_tap_input: dev=net1, type=0x0800, len=54 (platform/linux/driver/ether_tap.c:164)
         src: 4a:69:22:d9:65:8e
         dst: 00:00:5e:00:53:01
        type: 0x0800
-10:06:45.357 [D] net_input: dev=net1, type=0x0800, len=40 (net.c:240)
-10:06:45.357 [D] net_protocol_queue_push: success, proto=0x0800 queue.num=1 (net.c:214)
-10:06:45.357 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
-10:06:45.357 [D] net_protocol_queue_pop: success, proto=0x0800 queue.num=0 (net.c:230)
-10:06:45.357 [D] ip_input: dev=net1, len=40 (ip.c:326)
-10:06:45.357 [D] ip_input: permit, dev=net1, iface=192.0.2.2 (ip.c:374)
+12:46:18.296 [D] net_input: dev=net1, type=0x0800, len=40 (net.c:240)
+12:46:18.296 [D] net_protocol_queue_push: success, proto=0x0800 queue.num=1 (net.c:214)
+12:46:18.296 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:46:18.296 [D] net_protocol_queue_pop: success, proto=0x0800 queue.num=0 (net.c:230)
+12:46:18.296 [D] ip_input: dev=net1, len=40 (ip.c:326)
+12:46:18.296 [D] ip_input: permit, dev=net1, iface=192.0.2.2 (ip.c:374)
         vhl: 0x45 [v: 4, hl: 5 (20)]
         tos: 0x00
       total: 40 (payload: 20)
-         id: 42009
+         id: 55026
      offset: 0x4000 [flags=2, offset=0]
         ttl: 64
    protocol: 6
-        sum: 0x12b3
+        sum: 0xdfd9
         src: 192.0.2.1
         dst: 192.0.2.2
-10:06:45.357 [D] tcp_input: 192.0.2.1:10007 => 192.0.2.2:49152, len=20, dev=net1 (tcp.c:826)
-        src: 10007
-        dst: 49152
-        seq: 3782641891
-        ack: 2107871292
-        off: 0x50 (20) (options: 0, payload: 0)
-        flg: 0x11 (---A---F)
-        wnd: 64239
-        sum: 0xd18d
-         up: 0
-10:06:45.357 [D] tcp_segment_arrives: desc=0, state=FIN_WAIT1 (tcp.c:488)
-10:06:45.357 [D] tcp_retrans_queue_cleanup: desc=0, num=0, seq=2107871291 (tcp.c:411)
-10:06:45.357 [D] tcp_segment_arrives: desc=0, FIN_WAIT1 => FIN_WAIT2 (tcp.c:693)
-10:06:45.357 [D] tcp_output_segment: 192.0.2.2:49152 => 192.0.2.1:10007, len=20 (tcp.c:352)
-        src: 49152
-        dst: 10007
-        seq: 2107871292
-        ack: 3782641892
+12:46:18.296 [D] tcp_input: 192.0.2.1:36348 => 192.0.2.2:7, len=20, dev=net1 (tcp.c:950)
+        src: 36348
+        dst: 7
+        seq: 92518867
+        ack: 144081769
         off: 0x50 (20) (options: 0, payload: 0)
         flg: 0x10 (---A----)
-        wnd: 65535
-        sum: 0xcc7d
+        wnd: 64240
+        sum: 0x5786
          up: 0
-10:06:45.357 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
+12:46:18.296 [D] tcp_segment_arrives: desc=2, state=SYN_RECEIVED (tcp.c:512)
+12:46:18.296 [D] tcp_segment_arrives: desc=2, SYN_RECEIVED => ESTABLISHED (tcp.c:763)
+12:46:18.296 [D] tcp_retrans_queue_cleanup: desc=2, num=0, seq=144081768 (tcp.c:435)
+12:46:23.302 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:46:23.302 [D] ether_tap_input: dev=net1, type=0x0806, len=42 (platform/linux/driver/ether_tap.c:164)
+        src: 4a:69:22:d9:65:8e
+        dst: 00:00:5e:00:53:01
+       type: 0x0806
+12:46:23.302 [D] net_input: dev=net1, type=0x0806, len=28 (net.c:240)
+12:46:23.302 [D] net_protocol_queue_push: success, proto=0x0806 queue.num=1 (net.c:214)
+12:46:23.302 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:46:23.302 [D] net_protocol_queue_pop: success, proto=0x0806 queue.num=0 (net.c:230)
+12:46:23.302 [D] arp_input: dev=net1, len=28 (arp.c:242)
+        hrd: 0x0001
+        pro: 0x0800
+        hln: 6
+        pln: 4
+         op: 1 (Request)
+        sha: 4a:69:22:d9:65:8e
+        spa: 192.0.2.1
+        tha: 00:00:00:00:00:00
+        tpa: 192.0.2.2
+12:46:23.302 [D] arp_cache_update: UPDATE: pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:164)
+12:46:23.302 [D] arp_reply: dev=net1, len=28 (arp.c:202)
+        hrd: 0x0001
+        pro: 0x0800
+        hln: 6
+        pln: 4
+         op: 2 (Reply)
+        sha: 00:00:5e:00:53:01
+        spa: 192.0.2.2
+        tha: 4a:69:22:d9:65:8e
+        tpa: 192.0.2.1
+12:46:23.302 [D] net_device_output: dev=net1, type=0x0806, len=28 (net.c:108)
+12:46:23.302 [D] ether_tap_output: dev=net1, type=0x0806, len=60 (platform/linux/driver/ether_tap.c:137)
+        src: 00:00:5e:00:53:01
+        dst: 4a:69:22:d9:65:8e
+       type: 0x0806
+12:46:54.559 [D] arp_cache_delete: DELETE: pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:113)
+12:48:35.374 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:48:35.374 [D] ether_tap_input: dev=net1, type=0x0800, len=54 (platform/linux/driver/ether_tap.c:164)
+        src: 4a:69:22:d9:65:8e
+        dst: 00:00:5e:00:53:01
+       type: 0x0800
+12:48:35.374 [D] net_input: dev=net1, type=0x0800, len=40 (net.c:240)
+12:48:35.374 [D] net_protocol_queue_push: success, proto=0x0800 queue.num=1 (net.c:214)
+12:48:35.374 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:48:35.374 [D] net_protocol_queue_pop: success, proto=0x0800 queue.num=0 (net.c:230)
+12:48:35.374 [D] ip_input: dev=net1, len=40 (ip.c:326)
+12:48:35.374 [D] ip_input: permit, dev=net1, iface=192.0.2.2 (ip.c:374)
         vhl: 0x45 [v: 4, hl: 5 (20)]
         tos: 0x00
       total: 40 (payload: 20)
-         id: 20518
+         id: 41683
+     offset: 0x4000 [flags=2, offset=0]
+        ttl: 64
+   protocol: 6
+        sum: 0x13f9
+        src: 192.0.2.1
+        dst: 192.0.2.2
+12:48:35.374 [D] tcp_input: 192.0.2.1:35606 => 192.0.2.2:7, len=20, dev=net1 (tcp.c:950)
+        src: 35606
+        dst: 7
+        seq: 2729314314
+        ack: 1752666001
+        off: 0x50 (20) (options: 0, payload: 0)
+        flg: 0x11 (---A---F)
+        wnd: 64240
+        sum: 0x0300
+         up: 0
+12:48:35.374 [D] tcp_segment_arrives: desc=1, state=ESTABLISHED (tcp.c:512)
+12:48:35.374 [D] tcp_output_segment: 192.0.2.2:7 => 192.0.2.1:35606, len=8746683400607236116 (tcp.c:376)
+        src: 7
+        dst: 35606
+        seq: 1752666001
+        ack: 2729314315
+        off: 0x50 (20) (options: 0, payload: 0)
+        flg: 0x10 (---A----)
+        wnd: 65535
+        sum: 0xfdf0
+         up: 0
+12:48:35.374 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
+        vhl: 0x45 [v: 4, hl: 5 (20)]
+        tos: 0x00
+      total: 40 (payload: 20)
+         id: 54619
      offset: 0x0000 [flags=0, offset=0]
         ttl: 255
    protocol: 6
-        sum: 0xe7a5
+        sum: 0x6270
         src: 192.0.2.2
         dst: 192.0.2.1
-10:06:45.357 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
-10:06:45.357 [D] arp_resolve: resolved, pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:301)
-10:06:45.357 [D] net_device_output: dev=net1, type=0x0800, len=40 (net.c:108)
-10:06:45.357 [D] ether_tap_output: dev=net1, type=0x0800, len=60 (platform/linux/driver/ether_tap.c:137)
+12:48:35.374 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
+12:48:35.374 [D] arp_resolve: cache not found, pa=192.0.2.1 (arp.c:283)
+12:48:35.374 [D] arp_request: dev=net1, len=28 (arp.c:221)
+        hrd: 0x0001
+        pro: 0x0800
+        hln: 6
+        pln: 4
+         op: 1 (Request)
+        sha: 00:00:5e:00:53:01
+        spa: 192.0.2.2
+        tha: 00:00:00:00:00:00
+        tpa: 192.0.2.1
+12:48:35.374 [D] net_device_output: dev=net1, type=0x0806, len=28 (net.c:108)
+12:48:35.374 [D] ether_tap_output: dev=net1, type=0x0806, len=60 (platform/linux/driver/ether_tap.c:137)
+        src: 00:00:5e:00:53:01
+        dst: ff:ff:ff:ff:ff:ff
+       type: 0x0806
+12:48:35.374 [D] tcp_segment_arrives: desc=1, ESTABLISHED => CLOSE_WAIT (tcp.c:879)
+12:48:35.374 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:48:35.374 [D] ether_tap_input: dev=net1, type=0x0806, len=42 (platform/linux/driver/ether_tap.c:164)
+        src: 4a:69:22:d9:65:8e
+        dst: 00:00:5e:00:53:01
+       type: 0x0806
+12:48:35.374 [D] net_input: dev=net1, type=0x0806, len=28 (net.c:240)
+12:48:35.374 [D] net_protocol_queue_push: success, proto=0x0806 queue.num=1 (net.c:214)
+12:48:35.374 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:48:35.374 [D] net_protocol_queue_pop: success, proto=0x0806 queue.num=0 (net.c:230)
+12:48:35.374 [D] tcp_cmd_receive: connection closing (tcp.c:1527)
+12:48:35.374 [W] app_main: connection close by remote (test/test.c:136)
+12:48:35.374 [D] tcp_cmd_close: desc=1 (tcp.c:1161)
+12:48:35.374 [D] tcp_cmd_close: close connection (tcp.c:1179)
+12:48:35.374 [D] arp_input: dev=net1, len=28 (arp.c:242)
+        hrd: 0x0001
+        pro: 0x0800
+        hln: 6
+        pln: 4
+         op: 2 (Reply)
+        sha: 4a:69:22:d9:65:8e
+        spa: 192.0.2.1
+        tha: 00:00:5e:00:53:01
+        tpa: 192.0.2.2
+12:48:35.374 [D] arp_cache_update: UPDATE: pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:164)
+12:48:35.375 [D] tcp_retrans_queue_add: desc=1, num=1, seq=1752666001 (tcp.c:412)
+12:48:35.375 [D] tcp_output_segment: 192.0.2.2:7 => 192.0.2.1:35606, len=20 (tcp.c:376)
+        src: 7
+        dst: 35606
+        seq: 1752666001
+        ack: 2729314315
+        off: 0x50 (20) (options: 0, payload: 0)
+        flg: 0x11 (---A---F)
+        wnd: 65535
+        sum: 0xfdef
+         up: 0
+12:48:35.375 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
+        vhl: 0x45 [v: 4, hl: 5 (20)]
+        tos: 0x00
+      total: 40 (payload: 20)
+         id: 25948
+     offset: 0x0000 [flags=0, offset=0]
+        ttl: 255
+   protocol: 6
+        sum: 0xd26f
+        src: 192.0.2.2
+        dst: 192.0.2.1
+12:48:35.375 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
+12:48:35.375 [D] arp_resolve: resolved, pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:301)
+12:48:35.375 [D] net_device_output: dev=net1, type=0x0800, len=40 (net.c:108)
+12:48:35.375 [D] ether_tap_output: dev=net1, type=0x0800, len=60 (platform/linux/driver/ether_tap.c:137)
         src: 00:00:5e:00:53:01
         dst: 4a:69:22:d9:65:8e
        type: 0x0800
-10:06:45.357 [D] tcp_segment_arrives: desc=0, FIN_WAIT2 => TIME_WAIT (tcp.c:771)
-10:06:45.357 [D] tcp_set_timewait_timer: start time_wait timer: 30 seconds (tcp.c:464)
-10:07:15.047 [D] arp_cache_delete: DELETE: pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:113)
-10:07:15.364 [D] tcp_timer: timewait has elapsed, desc=0 (tcp.c:860)
-10:07:15.364 [D] tcp_timer: desc=0, TIME_WAIT => CLOSED (tcp.c:861)
-10:07:15.364 [D] tcp_pcb_release: successs, desc=0 (tcp.c:293)
-10:07:20.362 [I] cleanup: cleanup protocol stack... (test/test.c:94)
-10:07:20.362 [I] net_shutdown: shutting down... (net.c:335)
-10:07:20.362 [I] intr_main: terminated (platform/linux/intr.c:96)
-10:07:20.362 [I] net_device_close: dev=net1 (net.c:90)
-10:07:20.362 [I] ether_tap_close: dev=net1 (platform/linux/driver/ether_tap.c:117)
-10:07:20.362 [I] net_device_close: dev=net0 (net.c:90)
-10:07:20.362 [I] net_shutdown: success (net.c:342)
+12:48:35.375 [D] intr_main: IRQ <35> occurred (platform/linux/intr.c:83)
+12:48:35.375 [D] ether_tap_input: dev=net1, type=0x0800, len=54 (platform/linux/driver/ether_tap.c:164)
+        src: 4a:69:22:d9:65:8e
+        dst: 00:00:5e:00:53:01
+       type: 0x0800
+12:48:35.375 [D] net_input: dev=net1, type=0x0800, len=40 (net.c:240)
+12:48:35.375 [D] net_protocol_queue_push: success, proto=0x0800 queue.num=1 (net.c:214)
+12:48:35.375 [D] intr_main: IRQ <10> occurred (platform/linux/intr.c:83)
+12:48:35.375 [D] net_protocol_queue_pop: success, proto=0x0800 queue.num=0 (net.c:230)
+12:48:35.375 [D] ip_input: dev=net1, len=40 (ip.c:326)
+12:48:35.375 [D] ip_input: permit, dev=net1, iface=192.0.2.2 (ip.c:374)
+        vhl: 0x45 [v: 4, hl: 5 (20)]
+        tos: 0x00
+      total: 40 (payload: 20)
+         id: 41684
+     offset: 0x4000 [flags=2, offset=0]
+        ttl: 64
+   protocol: 6
+        sum: 0x13f8
+        src: 192.0.2.1
+        dst: 192.0.2.2
+12:48:35.375 [D] tcp_input: 192.0.2.1:35606 => 192.0.2.2:7, len=20, dev=net1 (tcp.c:950)
+        src: 35606
+        dst: 7
+        seq: 2729314315
+        ack: 1752666002
+        off: 0x50 (20) (options: 0, payload: 0)
+        flg: 0x10 (---A----)
+        wnd: 64239
+        sum: 0x0300
+         up: 0
+12:48:35.375 [D] tcp_cmd_close: desc=1, CLOSE_WAIT => LAST_ACK (tcp.c:1182)
+12:48:35.375 [D] tcp_cmd_close: desc=0 (tcp.c:1161)
+12:48:35.375 [D] tcp_cmd_close: desc=0, LISTEN => CLOSED (tcp.c:1169)
+12:48:35.375 [D] tcp_pcb_release: release backlog entry, desc=2, state=ESTABLISHED (tcp.c:309)
+12:48:35.375 [D] tcp_output_segment: 192.0.2.2:7 => 192.0.2.1:36348, len=281470681743380 (tcp.c:376)
+        src: 7
+        dst: 36348
+        seq: 144081769
+        ack: 92518867
+        off: 0x50 (20) (options: 0, payload: 0)
+        flg: 0x04 (-----R--)
+        wnd: 65535
+        sum: 0x5283
+         up: 0
+12:48:35.375 [D] ip_output: 192.0.2.2 => 192.0.2.1, protocol=6, len=20 (ip.c:458)
+        vhl: 0x45 [v: 4, hl: 5 (20)]
+        tos: 0x00
+      total: 40 (payload: 20)
+         id: 29430
+     offset: 0x0000 [flags=0, offset=0]
+        ttl: 255
+   protocol: 6
+        sum: 0xc4d5
+        src: 192.0.2.2
+        dst: 192.0.2.1
+12:48:35.375 [D] ip_output_device: dev=net1, len=40, target=192.0.2.1 (ip.c:402)
+12:48:35.375 [D] arp_resolve: resolved, pa=192.0.2.1, ha=4a:69:22:d9:65:8e (arp.c:301)
+12:48:35.375 [D] net_device_output: dev=net1, type=0x0800, len=40 (net.c:108)
+12:48:35.375 [D] ether_tap_output: dev=net1, type=0x0800, len=60 (platform/linux/driver/ether_tap.c:137)
+        src: 00:00:5e:00:53:01
+        dst: 4a:69:22:d9:65:8e
+       type: 0x0800
+12:48:35.375 [D] tcp_pcb_release: desc=2, ESTABLISHED => CLOSED (tcp.c:312)
+12:48:35.375 [D] tcp_pcb_release: successs, desc=2 (tcp.c:317)
+12:48:35.375 [D] tcp_pcb_release: successs, desc=0 (tcp.c:317)
+12:48:35.375 [D] app_main: terminate (test/test.c:145)
+12:48:35.375 [D] tcp_segment_arrives: desc=1, state=LAST_ACK (tcp.c:512)
+12:48:35.375 [D] tcp_segment_arrives: desc=1, LAST_ACK => CLOSED (tcp.c:820)
+12:48:35.375 [D] tcp_pcb_release: free queue entry (tcp.c:301)
+12:48:35.376 [D] tcp_pcb_release: successs, desc=1 (tcp.c:317)
+12:48:36.376 [I] cleanup: cleanup protocol stack... (test/test.c:94)
+12:48:36.376 [I] net_shutdown: shutting down... (net.c:335)
+12:48:36.377 [I] intr_main: terminated (platform/linux/intr.c:96)
+12:48:36.377 [I] net_device_close: dev=net1 (net.c:90)
+12:48:36.377 [I] ether_tap_close: dev=net1 (platform/linux/driver/ether_tap.c:117)
+12:48:36.377 [I] net_device_close: dev=net0 (net.c:90)
+12:48:36.377 [I] net_shutdown: success (net.c:342)
